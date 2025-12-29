@@ -1,4 +1,4 @@
-name: Spring Boot CI/CD (Gradle → EC2)
+name: Spring Boot CI/CD (Gradle → EC2) v1
 
 on:
   push:
@@ -28,8 +28,8 @@ jobs:
     - name: Copy JAR to EC2
       uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
+        host: ${{ secrets.ec2-3-237-40-12.compute-1.amazonaws.com }}
+        username: ${{ secrets.ec2-user }}
         key: ${{ secrets.EC2_KEY }}
         source: "build/libs/*.jar"
         target: "/home/ec2-user/app"
@@ -37,7 +37,7 @@ jobs:
     - name: Run Spring Boot App
       uses: appleboy/ssh-action@v1.0.3
       with:
-        host: ${{ secrets.EC2_HOST }}
+        host: ${{ secrets.ec2-3-237-40-12.compute-1.amazonaws.com }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         script: |
