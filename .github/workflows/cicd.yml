@@ -1,33 +1,23 @@
-name: Spring Boot CI/CD to EC2
 
-on:
-  push:
-    branches:
-      - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Java 17
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
-
-    - name: Build project
-      run: mvn clean package
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
+        username: ec2-user
         key: ${{ secrets.EC2_KEY }}
+        port: 22
+        timeout: 180s
+        command_timeout: 10m
+        request_pty: true
+        debug: true
         script: |
+          pwd
+          whoami
           cd /home/ec2-user/app/SpringCICD
+          ls
           ./deploy.sh
+
+
+
