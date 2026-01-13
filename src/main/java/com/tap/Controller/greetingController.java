@@ -10,5 +10,11 @@ public class greetingController {
 	{
 		return "Hello I am Jagadeesh Reddy! I am from CICD is Working!";
 	}
+	
+	@GetMapping("hello")
+	public String hello()
+	{
+		return "Hello this is Jagadeesh Reddy!";	
+	}
 
 }
